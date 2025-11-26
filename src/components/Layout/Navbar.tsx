@@ -37,8 +37,9 @@ import {
 
 const routes = [
   { to: "/", label: "Home", private: true },
-  { to: "/chat", label: "Chat", private: true },
+  { to: "/chat", label: "Chat", private: true, admin:false },
   { to: "/admin", label: "Admin", private: true, admin: true },
+  { to: "/upload", label: "Upload", private: true, admin: true },
 ];
 
 const FuturisticNavbar: React.FC = () => {
@@ -67,7 +68,8 @@ const FuturisticNavbar: React.FC = () => {
 
   const filteredRoutes = routes.filter((r) => {
     if (!user && r.private) return false;
-    if (r.admin && user?.role !== "admin") return false;
+    if (r.admin === true && user?.role !== "admin") return false;
+    if (r.admin === false && user?.role === "admin") return false;
     return true;
   });
 

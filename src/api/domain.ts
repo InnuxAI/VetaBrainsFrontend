@@ -6,6 +6,7 @@ export interface Domain {
   display_name?: string;
   icon?: string;
   description?: string;
+  subdomain?: string[];
 }
 
 export async function fetchDomains(): Promise<Domain[]> {

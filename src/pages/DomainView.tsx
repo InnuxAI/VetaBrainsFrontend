@@ -51,14 +51,14 @@ const DomainView: React.FC = () => {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 2xl:px-20 py-6 space-y-6">
-      <div className="flex items-center justify-between flex-wrap gap-3">
+      {/* <div className="flex items-center justify-between flex-wrap gap-3">
         <h1 className="text-2xl font-bold mt-4">Documents in {normalizedDomain}</h1>
         {canUpload && !domLoading && (
           <div className="min-w-[280px]">
             <UploadDocument domains={domains} onUploadSuccess={refreshDocuments} />
           </div>
         )}
-      </div>
+      </div> */}
 
       {error && <p className="text-red-500">{error}</p>}
 

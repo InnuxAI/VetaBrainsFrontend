@@ -32,20 +32,41 @@
 
 import { api } from "./http";
 
-export interface DocumentResponse {
+// export interface DocumentResponse {
+//   id: string;
+//   filename: string;
+//   original_name: string;
+//   domain: string;
+//   file_type: string;
+//   file_size: number;
+//   title?: string;
+//   description?: string;
+//   uploaded_by: string;
+//   upload_date: string;
+//   is_new?: boolean;
+//   new_until?: string;
+// }
+export type DocumentResponse = {
   id: string;
   filename: string;
   original_name: string;
   domain: string;
+  subdomain?: string | null; // new
   file_type: string;
   file_size: number;
-  title?: string;
-  description?: string;
+  title?: string | null;
+  description?: string | null;
   uploaded_by: string;
   upload_date: string;
   is_new?: boolean;
-  new_until?: string;
-}
+  new_until?: string | null;
+  storage?: string;
+  blob_container?: string;
+  blob_name?: string;
+  blob_url?: string;
+  blob_account?: string | null;
+};
+
 
 /**
  * List documents in a domain (RBAC enforced server-side).
@@ -59,22 +80,43 @@ export async function fetchDocuments(domain: string): Promise<DocumentResponse[]
  * Upload a document to a domain.
  * Backend saves file then triggers background indexing into Chroma.
  */
+// export async function uploadDocument(
+//   domain: string,
+//   file: File,
+//   title?: string,
+//   description?: string
+// ): Promise<DocumentResponse> {
+//   const form = new FormData();
+//   form.append("domain", domain);
+
+//   form.append("file", file);
+//   if (title) form.append("title", title);
+//   if (description) form.append("description", description);
+
+//   const { data } = await api.post("/documents/upload", form, {
+//     headers: { "Content-Type": "multipart/form-data" },
+//   });
+//   return data as DocumentResponse;
+// }
+
 export async function uploadDocument(
   domain: string,
   file: File,
   title?: string,
-  description?: string
+  description?: string,
+  subdomain?: string // NEW
 ): Promise<DocumentResponse> {
   const form = new FormData();
   form.append("domain", domain);
-  form.append("file", file);
+  if (subdomain) form.append("subdomain", subdomain); // NEW
   if (title) form.append("title", title);
   if (description) form.append("description", description);
+  form.append("file", file);
 
-  const { data } = await api.post("/documents/upload", form, {
+  const { data } = await api.post<DocumentResponse>("/documents/upload", form, {
     headers: { "Content-Type": "multipart/form-data" },
   });
-  return data as DocumentResponse;
+  return data;
 }
 
 /**

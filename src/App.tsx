@@ -16,6 +16,8 @@ import UsersMatrix from "./components/Admin/UsersMatrix";
 // import GlobalChat from "./pages/GlobalChat";
 // import UsersAdmin from "./components/Admin/UsersAdmin";
 import Chat from "./pages/Chat";
+import UploadDocumentPage from "./pages/UploadDocumentPage";
+// import UploadDocx from "./pages/UploadDocx";
 
 // ---------- Types ----------
 interface User {
@@ -141,6 +143,16 @@ const App: React.FC = () => {
                 }
               />
 
+              <Route
+              path="/upload"
+              element={
+                <AdminRoute>
+                  <UploadDocumentPage />
+                </AdminRoute>
+              }
+            />
+
+
               {/* Admin Routes */}
               <Route
                 path="/admin"
@@ -150,6 +162,7 @@ const App: React.FC = () => {
                   </AdminRoute>
                 }
               >
+
                 
                 <Route index element={<Navigate to="matrix" replace />} />
                 <Route
@@ -160,6 +173,7 @@ const App: React.FC = () => {
                     </AdminRoute>
                   }
                 />
+          
               </Route>
 
               {/* Fallback */}
